@@ -1,5 +1,5 @@
 name: MineStat
 author: ElementalMP4
-version: '1.0.0'
+version: 1.0.0
 main: main.java.minestat.MineStat
 description: Show live statistics of your server in Discord!!

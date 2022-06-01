@@ -71,5 +71,10 @@ public class Config {
 	public String getServerLink() {
 		return config.getProperty("server-ip");
 	}
+	
+	public String getServerName() {
+		String name = config.getProperty("name");
+		return name == null ? "Minecraft Server" : name;
+	}
 
 }

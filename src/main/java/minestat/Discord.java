@@ -58,9 +58,11 @@ public class Discord {
 			return;
 		}
 
+		plugin.getLogger().info("Updating embed");
+		
 		EmbedBuilder embedBuilder = new EmbedBuilder()
 				.setColor(GetEmbedColour(config.getEmbedColour()))
-				.setTitle(plugin.getServer().getName() + " Information")
+				.setTitle(config.getServerName() + " Information")
 				.setDescription(config.getEmbedDescription())
 				.setThumbnail(channel.getGuild().getIconUrl())
 				.addField("Server Status", GetServerStatus(online), true)
