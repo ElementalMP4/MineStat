@@ -16,7 +16,6 @@ The following config options are supported:
 ```
 channel=discord-text-channel-id (required)
 token=discord-bot-token (required)
-colour=hex-colour (optional)
 description=Server Description (optional)
 website=https://server.com/ (optional)
 server-ip=mc.server.com (optional)
