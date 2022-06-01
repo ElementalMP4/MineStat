@@ -40,12 +40,7 @@ public class Config {
 	public String getMessageID() {
 		return config.getProperty("message");
 	}
-	
-	public String getEmbedColour() {
-		String colour = config.getProperty("colour");
-		return  colour == null ? "000000" : colour.replace("#", "");
-	}
-	
+
 	public void setMessageID(String messageID) {
 		config.setProperty("message", messageID);
 		saveConfig();

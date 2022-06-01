@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.Result;
 
 public class Discord {
 	
@@ -40,11 +41,8 @@ public class Discord {
 		totalPlayers = totalMembers;
 	}
 	
-	private static Color GetEmbedColour(String hex) {
-		return new Color(
-	            Integer.valueOf(hex.substring(0, 2), 16),
-	            Integer.valueOf(hex.substring(2, 4), 16),
-	            Integer.valueOf(hex.substring(4, 6), 16));
+	private static Color GetEmbedColour(boolean online2) {
+		return online ? Color.GREEN : Color.RED;
 	}
 	
 	private static String GetServerStatus(boolean online) {
@@ -61,7 +59,7 @@ public class Discord {
 		plugin.getLogger().info("Updating embed");
 		
 		EmbedBuilder embedBuilder = new EmbedBuilder()
-				.setColor(GetEmbedColour(config.getEmbedColour()))
+				.setColor(GetEmbedColour(online))
 				.setTitle(config.getServerName() + " Information")
 				.setDescription(config.getEmbedDescription())
 				.setThumbnail(channel.getGuild().getIconUrl())
@@ -77,8 +75,13 @@ public class Discord {
 			Message message = channel.sendMessageEmbeds(embed).complete();
 			config.setMessageID(message.getId());
 		} else {
-			Message message = channel.retrieveMessageById(config.getMessageID()).complete();
-			message.editMessageEmbeds(embed).queue();	
+			Result<Message> message = channel.retrieveMessageById(config.getMessageID()).mapToResult().complete();
+			if (message.isSuccess()) message.get().editMessageEmbeds(embed).queue();
+			else {
+				Message newMessage = channel.sendMessageEmbeds(embed).complete();
+				config.setMessageID(newMessage.getId());
+			}
+			
 		}
 	}
 }
